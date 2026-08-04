@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { ExternalLink } from "@/components/ExternalLink";
 import { MARCAS, whatsappLink } from "@/lib/sargento";
 
 type VehicleType = "Carro" | "Moto" | "Caminhão / Frota";
@@ -78,14 +79,14 @@ export function LeadFilter() {
           Seu {vehicle?.toLowerCase()} {marca} {modelo} já está com a nossa equipe. Para adiantar a
           instalação, chame agora no WhatsApp — respondemos em minutos.
         </p>
-        <a
+        <ExternalLink
           href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
+          event="whatsapp_click"
+          eventParams={{ location: "lead-form-success" }}
           className="mt-6 inline-flex h-13 items-center justify-center rounded-xl bg-primary px-7 py-3.5 font-display text-base uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
         >
           Falar no WhatsApp agora
-        </a>
+        </ExternalLink>
       </div>
     );
   }
