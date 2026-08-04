@@ -139,7 +139,7 @@ function Index() {
           <nav className="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] text-mist md:flex">
             <a href="#solucao" className="transition hover:text-primary">Solução</a>
             <a href="#planos" className="transition hover:text-primary">Planos</a>
-            <a href="#cotacao" className="transition hover:text-primary">Cotação</a>
+            <a href="#cotacao" className="transition hover:text-primary">Agendar</a>
             <a href="#duvidas" className="transition hover:text-primary">Dúvidas</a>
           </nav>
           <ExternalLink
@@ -396,19 +396,20 @@ function Index() {
       <section id="cotacao" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
         <div className="grid gap-12 md:grid-cols-[1fr_1.1fr] md:items-center">
           <div>
-            <Eyebrow>Cotação em 30 segundos</Eyebrow>
+            <Eyebrow>Agendamento de instalação</Eyebrow>
             <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)]">
-              Monte a proteção do seu veículo
+              Agende a instalação do seu rastreador
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              Responda três passos rápidos e nossa equipe já chega no atendimento sabendo o seu
-              veículo, o seu plano e o melhor horário de instalação.
+              Preencha os dados do veículo e escolha o local: o técnico vai até você ou você vem à
+              nossa base no Novo Aleixo. Na sequência você escolhe data e horário na agenda online.
             </p>
             <ul className="mt-8 space-y-4">
               {[
-                ["Sem compromisso", "Você recebe a cotação e decide depois."],
-                ["Atendimento humano", "Quem fala com você é da equipe da Sargento, em Manaus."],
-                ["Instalação rápida", "Agendamento no mesmo dia conforme disponibilidade."],
+                ["Data e horário na hora", "Você escolhe o melhor dia direto na nossa agenda."],
+                ["Técnico até você", "Instalação no seu endereço em Manaus ou na nossa base."],
+                ["Documentos simples", "CNH ou identidade, e-mail e comprovante de residência."],
+
               ].map(([t, d]) => (
                 <li key={t} className="flex gap-3.5">
                   <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
