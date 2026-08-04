@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LeadFilter } from "@/components/LeadFilter";
+import { LiveTracker } from "@/components/LiveTracker";
+import { TechTicker } from "@/components/TechTicker";
+import { Counter, Reveal, ScrollProgress } from "@/components/Motion";
 import heroImg from "@/assets/hero-veiculo.jpg";
 import logoAsset from "@/assets/logo-sargento-claro.png.asset.json";
 import iconeAsset from "@/assets/sargento-icone.png.asset.json";
+
 import {
   EMPRESA,
   FAQ,
@@ -146,7 +150,9 @@ function Index() {
             WhatsApp
           </a>
         </div>
+        <ScrollProgress />
       </header>
+
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -182,14 +188,16 @@ function Index() {
             </div>
             <dl className="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-7">
               {[
-                ["500+", "clientes ativos"],
-                ["24h", "resgate e disk"],
-                ["+90%", "chance de recuperação"],
-              ].map(([n, l]) => (
-                <div key={l}>
-                  <dt className="font-display text-3xl text-primary md:text-4xl">{n}</dt>
+                { n: 500, suffix: "+", l: "clientes ativos" },
+                { n: 24, suffix: "h", l: "resgate e disk" },
+                { n: 90, prefix: "+", suffix: "%", l: "chance de recuperação" },
+              ].map((s) => (
+                <div key={s.l}>
+                  <dt className="font-display text-3xl text-primary md:text-4xl">
+                    <Counter value={s.n} prefix={s.prefix ?? ""} suffix={s.suffix} />
+                  </dt>
                   <dd className="mt-1 font-mono text-[10px] uppercase tracking-[0.15em] text-steel">
-                    {l}
+                    {s.l}
                   </dd>
                 </div>
               ))}
@@ -197,6 +205,9 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <TechTicker />
+
 
       {/* PROBLEMA */}
       <section className="border-y border-border bg-navy-900/40">
@@ -230,15 +241,24 @@ function Index() {
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {RECURSOS.map((r, i) => (
-            <article key={r.titulo} className="bg-navy-900/80 p-6 transition hover:bg-navy-800">
+            <Reveal
+              key={r.titulo}
+              as="article"
+              delay={i * 60}
+              className="group relative bg-navy-900/80 p-6 transition hover:bg-navy-800"
+            >
               <span className="font-mono text-[11px] text-primary/70">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-3 text-base tracking-wide">{r.titulo}</h3>
+              <h3 className="mt-3 text-base tracking-wide transition group-hover:text-primary">
+                {r.titulo}
+              </h3>
               <p className="mt-2 text-sm text-muted-foreground">{r.desc}</p>
-            </article>
+              <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100" />
+            </Reveal>
           ))}
         </div>
+
       </section>
 
       {/* APP PRÓPRIO */}
@@ -272,40 +292,21 @@ function Index() {
           </div>
           <div className="relative flex items-center justify-center">
             <div className="absolute h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-            <div className="surface-panel relative w-full max-w-sm rounded-3xl p-7">
-              <div className="flex items-center gap-3 border-b border-border pb-4">
-                <img src={iconeAsset.url} alt="" width={64} height={64} className="h-10 w-10" loading="lazy" />
-                <div>
-                  <p className="font-display text-sm uppercase tracking-wide text-white">App Sargento</p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-primary">
-                    Sinal ativo
-                  </p>
-                </div>
-              </div>
-              <div className="mt-5 space-y-3">
-                {[
-                  ["Localização", "Av. Cel Sávio Belota — Manaus/AM"],
-                  ["Velocidade", "0 km/h · estacionado"],
-                  ["Cerca virtual", "Dentro da área permitida"],
-                  ["Bloqueio remoto", "Pronto para acionar"],
-                ].map(([k, v]) => (
-                  <div key={k} className="rounded-xl bg-navy-950/60 p-3.5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-steel">{k}</p>
-                    <p className="mt-1 text-sm text-ink">{v}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="relative w-full max-w-sm">
+              <LiveTracker />
             </div>
           </div>
+
         </div>
       </section>
 
       {/* PROVA */}
       <section className="mx-auto max-w-6xl px-5 py-20 md:py-24">
-        <div className="surface-panel grid gap-8 rounded-2xl p-8 md:grid-cols-[auto_1fr] md:items-center md:p-12">
+        <div className="surface-panel scan-sweep grid gap-8 rounded-2xl p-8 md:grid-cols-[auto_1fr] md:items-center md:p-12">
           <p className="font-display text-[clamp(4rem,11vw,7.5rem)] leading-none text-gradient-gold">
-            500+
+            <Counter value={500} suffix="+" duration={1800} />
           </p>
+
           <div>
             <h2 className="text-2xl">Clientes ativos em Manaus, hoje</h2>
             <p className="mt-3 max-w-xl text-muted-foreground">
@@ -331,15 +332,18 @@ function Index() {
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {PLANOS.map((p) => (
-              <article
+            {PLANOS.map((p, pi) => (
+              <Reveal
                 key={p.nome}
-                className={`relative flex flex-col rounded-2xl border p-7 transition ${
+                as="article"
+                delay={pi * 90}
+                className={`hover-lift relative flex flex-col rounded-2xl border p-7 ${
                   p.destaque
                     ? "border-primary bg-navy-800/80 shadow-[var(--shadow-gold)]"
-                    : "border-border bg-navy-950/50"
+                    : "border-border bg-navy-950/50 hover:border-primary/60"
                 }`}
               >
+
                 <span
                   className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
                     p.destaque ? "text-primary" : "text-steel"
@@ -373,7 +377,7 @@ function Index() {
                 >
                   Quero este plano
                 </a>
-              </article>
+              </Reveal>
             ))}
           </div>
 
