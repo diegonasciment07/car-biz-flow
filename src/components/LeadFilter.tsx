@@ -68,7 +68,7 @@ export function LeadFilter() {
 
   if (ok) {
     return (
-      <div className="surface-panel rounded-2xl p-8 text-center md:p-10">
+      <div className="surface-panel rounded-xl p-8 text-center md:p-10">
         <div className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground radar-pulse">
           <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
@@ -83,7 +83,7 @@ export function LeadFilter() {
           href={wa}
           event="whatsapp_click"
           eventParams={{ location: "lead-form-success" }}
-          className="mt-6 inline-flex h-13 items-center justify-center rounded-xl bg-primary px-7 py-3.5 font-display text-base uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
+          className="mt-6 inline-flex h-13 items-center justify-center rounded-xl bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
         >
           Falar no WhatsApp agora
         </ExternalLink>
@@ -92,7 +92,7 @@ export function LeadFilter() {
   }
 
   return (
-    <div className="surface-panel rounded-2xl p-6 md:p-8">
+    <div className="surface-panel rounded-xl p-6 md:p-8">
       <div className="mb-6 flex items-center gap-3">
         {STEPS.map((s, i) => (
           <div key={s} className="flex-1">
@@ -100,7 +100,7 @@ export function LeadFilter() {
               className={`h-1 rounded-full transition-colors ${i <= step ? "bg-primary" : "bg-white/12"}`}
             />
             <span
-              className={`mt-2 block font-mono text-[10px] uppercase tracking-[0.18em] ${
+              className={`mt-2 block text-[11px] uppercase tracking-[0.2em] ${
                 i <= step ? "text-primary" : "text-steel"
               }`}
             >
@@ -131,7 +131,7 @@ export function LeadFilter() {
                     : "border-border bg-white/[0.02] hover:border-primary/60 hover:bg-primary/5"
                 }`}
               >
-                <span className="block font-display text-lg uppercase text-white">{v.label}</span>
+                <span className="block text-base font-medium text-ink">{v.label}</span>
                 <span className="mt-1 block text-xs text-muted-foreground">{v.hint}</span>
               </button>
             ))}
@@ -144,13 +144,13 @@ export function LeadFilter() {
           <h3 className="text-xl">Marca e modelo do {vehicle?.toLowerCase()}</h3>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className="block">
-              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              <span className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-steel">
                 Marca
               </span>
               <select
                 value={marca}
                 onChange={(e) => setMarca(e.target.value)}
-                className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white outline-none transition focus:border-primary"
+                className="h-12 w-full rounded-lg border border-input bg-navy-950/60 px-4 text-ink outline-none transition focus:border-primary"
               >
                 <option value="">Selecione</option>
                 {MARCAS.map((m) => (
@@ -161,7 +161,7 @@ export function LeadFilter() {
               </select>
             </label>
             <label className="block">
-              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              <span className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-steel">
                 Modelo
               </span>
               <input
@@ -169,7 +169,7 @@ export function LeadFilter() {
                 onChange={(e) => setModelo(e.target.value)}
                 maxLength={80}
                 placeholder="Ex.: Onix 1.0, Fan 160, Cargo 816"
-                className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white placeholder:text-steel outline-none transition focus:border-primary"
+                className="h-12 w-full rounded-lg border border-input bg-navy-950/60 px-4 text-ink placeholder:text-steel outline-none transition focus:border-primary"
               />
             </label>
           </div>
@@ -177,7 +177,7 @@ export function LeadFilter() {
             <button
               type="button"
               onClick={() => setStep(0)}
-              className="h-12 rounded-xl border border-border px-5 font-display text-sm uppercase tracking-wide text-mist transition hover:text-white"
+              className="h-12 rounded-xl border border-border px-5 text-sm font-medium text-mist transition hover:text-ink"
             >
               Voltar
             </button>
@@ -185,7 +185,7 @@ export function LeadFilter() {
               type="button"
               disabled={!marca}
               onClick={() => setStep(2)}
-              className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              className="h-12 flex-1 rounded-xl bg-primary px-5 text-sm font-medium text-primary-foreground transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Continuar
             </button>
@@ -198,7 +198,7 @@ export function LeadFilter() {
           <h3 className="text-xl">Para onde enviamos sua cotação?</h3>
           <div className="mt-5 grid gap-4">
             <label className="block">
-              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              <span className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-steel">
                 Nome completo
               </span>
               <input
@@ -206,12 +206,12 @@ export function LeadFilter() {
                 onChange={(e) => setNome(e.target.value)}
                 maxLength={120}
                 autoComplete="name"
-                className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white outline-none transition focus:border-primary"
+                className="h-12 w-full rounded-lg border border-input bg-navy-950/60 px-4 text-ink outline-none transition focus:border-primary"
               />
             </label>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+                <span className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-steel">
                   WhatsApp
                 </span>
                 <input
@@ -220,11 +220,11 @@ export function LeadFilter() {
                   inputMode="tel"
                   autoComplete="tel"
                   placeholder="(92) 90000-0000"
-                  className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white placeholder:text-steel outline-none transition focus:border-primary"
+                  className="h-12 w-full rounded-lg border border-input bg-navy-950/60 px-4 text-ink placeholder:text-steel outline-none transition focus:border-primary"
                 />
               </label>
               <label className="block">
-                <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+                <span className="mb-2 block text-[11px] uppercase tracking-[0.2em] text-steel">
                   E-mail (opcional)
                 </span>
                 <input
@@ -233,7 +233,7 @@ export function LeadFilter() {
                   maxLength={255}
                   inputMode="email"
                   autoComplete="email"
-                  className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white outline-none transition focus:border-primary"
+                  className="h-12 w-full rounded-lg border border-input bg-navy-950/60 px-4 text-ink outline-none transition focus:border-primary"
                 />
               </label>
             </div>
@@ -245,7 +245,7 @@ export function LeadFilter() {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="h-12 rounded-xl border border-border px-5 font-display text-sm uppercase tracking-wide text-mist transition hover:text-white"
+              className="h-12 rounded-xl border border-border px-5 text-sm font-medium text-mist transition hover:text-ink"
             >
               Voltar
             </button>
@@ -253,7 +253,7 @@ export function LeadFilter() {
               type="button"
               onClick={enviar}
               disabled={enviando}
-              className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 disabled:opacity-60"
+              className="h-12 flex-1 rounded-xl bg-primary px-5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 disabled:opacity-60"
             >
               {enviando ? "Enviando..." : "Ver minha cotação"}
             </button>
