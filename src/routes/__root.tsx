@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:locale", content: "pt_BR" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#05121F" },
+      { name: "theme-color", content: "#0D0D0D" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
