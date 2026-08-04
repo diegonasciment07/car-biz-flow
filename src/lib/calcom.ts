@@ -7,7 +7,7 @@
  * Enquanto estiver vazio, a página mostra o estado "agenda em configuração"
  * e o cliente é direcionado ao WhatsApp — nada quebra.
  */
-export const CAL_LINK = "";
+export const CAL_LINK: string = "";
 
 /** Duração/rótulo exibidos no bloco de agenda. */
 export const CAL_EVENT_LABEL = "Instalação do rastreador";
