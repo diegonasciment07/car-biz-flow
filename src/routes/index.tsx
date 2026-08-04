@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ExternalLink } from "@/components/ExternalLink";
 import { LeadFilter } from "@/components/LeadFilter";
 import { LiveTracker } from "@/components/LiveTracker";
 import { TechTicker } from "@/components/TechTicker";
@@ -96,17 +97,17 @@ export const Route = createFileRoute("/")({
 
 function CtaWhats({ className = "", label = "Falar no WhatsApp agora" }) {
   return (
-    <a
+    <ExternalLink
       href={WHATSAPP_DEFAULT}
-      target="_blank"
-      rel="noopener noreferrer"
+      event="whatsapp_click"
+      eventParams={{ location: label }}
       className={`inline-flex items-center justify-center gap-2.5 rounded-xl bg-primary px-7 py-4 font-display text-base uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 active:scale-[0.99] ${className}`}
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
         <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm5.8 14.05c-.25.69-1.45 1.32-2 1.4-.53.08-1.19.11-1.92-.12a17.6 17.6 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17s.8-2.25 1.08-2.56c.28-.31.61-.39.81-.39l.58.01c.19.01.44-.07.69.53.25.6.85 2.07.93 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5l-.44.52c-.15.15-.3.32-.13.62.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.55.35.07.13.07.74-.18 1.43Z" />
       </svg>
       {label}
-    </a>
+    </ExternalLink>
   );
 }
 
@@ -141,14 +142,14 @@ function Index() {
             <a href="#cotacao" className="transition hover:text-primary">Cotação</a>
             <a href="#duvidas" className="transition hover:text-primary">Dúvidas</a>
           </nav>
-          <a
+          <ExternalLink
             href={WHATSAPP_DEFAULT}
-            target="_blank"
-            rel="noopener noreferrer"
+            event="whatsapp_click"
+            eventParams={{ location: "header" }}
             className="rounded-lg bg-primary px-4 py-2.5 font-display text-xs uppercase tracking-wider text-primary-foreground transition hover:brightness-110 md:px-5 md:text-sm"
           >
             WhatsApp
-          </a>
+          </ExternalLink>
         </div>
         <ScrollProgress />
       </header>
@@ -490,22 +491,22 @@ function Index() {
           </div>
           <div className="text-sm text-steel">
             <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-mist">Contato</p>
-            <a
+            <ExternalLink
               href={WHATSAPP_DEFAULT}
-              target="_blank"
-              rel="noopener noreferrer"
+              event="whatsapp_click"
+              eventParams={{ location: "footer" }}
               className="inline-flex items-center gap-2 text-ink transition hover:text-primary"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                 <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Z" />
               </svg>
               {WHATSAPP_DISPLAY}
-            </a>
+            </ExternalLink>
             <br />
-            <a
+            <ExternalLink
               href={EMPRESA.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
+              event="instagram_click"
+              eventParams={{ location: "footer" }}
               className="mt-3 inline-flex items-center gap-2 text-ink transition hover:text-primary"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
@@ -514,7 +515,7 @@ function Index() {
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
               </svg>
               @sargentorastreamento
-            </a>
+            </ExternalLink>
             <p className="mt-3">{EMPRESA.email}</p>
           </div>
         </div>
@@ -526,17 +527,17 @@ function Index() {
       </footer>
 
       {/* WHATSAPP FLUTUANTE */}
-      <a
+      <ExternalLink
         href={WHATSAPP_DEFAULT}
-        target="_blank"
-        rel="noopener noreferrer"
+        event="whatsapp_click"
+        eventParams={{ location: "float" }}
         aria-label="Falar no WhatsApp"
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-navy-950 shadow-[var(--shadow-panel)] transition hover:scale-105"
       >
         <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden="true">
           <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm5.8 14.05c-.25.69-1.45 1.32-2 1.4-.53.08-1.19.11-1.92-.12a17.6 17.6 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17s.8-2.25 1.08-2.56c.28-.31.61-.39.81-.39l.58.01c.19.01.44-.07.69.53.25.6.85 2.07.93 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5l-.44.52c-.15.15-.3.32-.13.62.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.55.35.07.13.07.74-.18 1.43Z" />
         </svg>
-      </a>
+      </ExternalLink>
     </div>
   );
 }
