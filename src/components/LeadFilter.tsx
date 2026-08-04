@@ -242,7 +242,7 @@ export function LeadFilter() {
 
       {step === 2 && (
         <div className="animate-rise">
-          <h3 className="text-xl">Para onde enviamos sua cotação?</h3>
+          <h3 className="text-xl">Seus dados para o agendamento</h3>
           <div className="mt-5 grid gap-4">
             <label className="block">
               <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
@@ -272,7 +272,7 @@ export function LeadFilter() {
               </label>
               <label className="block">
                 <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
-                  E-mail (opcional)
+                  E-mail
                 </span>
                 <input
                   value={email}
