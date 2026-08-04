@@ -65,11 +65,11 @@ export function LiveTracker() {
   const [t, setT] = useState(0);
   const [pos, setPos] = useState({ x: 18, y: 208 });
   const [bloqueado, setBloqueado] = useState(false);
-  const [rotaId, setRotaId] = useState(ROTAS[0].id);
+  const [rotaId, setRotaId] = useState(ROTAS[0]!.id);
   const [veiculoId, setVeiculoId] = useState<(typeof VEICULOS)[number]["id"]>("carro");
 
-  const rota = ROTAS.find((r) => r.id === rotaId) ?? ROTAS[0];
-  const veiculo = VEICULOS.find((v) => v.id === veiculoId) ?? VEICULOS[0];
+  const rota = ROTAS.find((r) => r.id === rotaId) ?? ROTAS[0]!;
+  const veiculo = VEICULOS.find((v) => v.id === veiculoId) ?? VEICULOS[0]!;
 
   useEffect(() => {
     setT(0);
@@ -105,7 +105,7 @@ export function LiveTracker() {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
-  const rua = rota.ruas[Math.min(rota.ruas.length - 1, Math.floor(t * rota.ruas.length))];
+  const rua = rota.ruas[Math.min(rota.ruas.length - 1, Math.floor(t * rota.ruas.length))] ?? "";
 
   return (
     <div className="surface-panel relative overflow-hidden rounded-3xl p-5 md:p-6">
