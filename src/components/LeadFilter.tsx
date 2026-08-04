@@ -37,29 +37,42 @@ export function LeadFilter() {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
+  const [installMode, setInstallMode] = useState<InstallMode | null>(null);
+  const [endereco, setEndereco] = useState("");
+  const [docsOk, setDocsOk] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [ok, setOk] = useState(false);
 
-  const wa = whatsappLink(
-    `Olá! Sou ${nome || "cliente"} e quero rastreamento para meu ${vehicle ?? "veículo"} ${marca} ${modelo}`.trim(),
-  );
+  const veiculoTxt = `${vehicle ?? "veículo"} ${marca} ${modelo}`.trim();
+  const localTxt =
+    installMode === "loja" ? `na loja (${ENDERECO_LOJA})` : `no endereço: ${endereco}`;
+  const waMsg =
+    `Olá! Sou ${nome || "cliente"} e quero agendar a instalação do rastreador no meu ${veiculoTxt} ${installMode ? localTxt : ""}`.trim();
+  const wa = whatsappLink(waMsg);
 
   async function enviar() {
     setErro(null);
     if (nome.trim().length < 2) return setErro("Informe seu nome completo.");
     if (digits(telefone).length < 10) return setErro("Informe um WhatsApp válido com DDD.");
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
-      return setErro("E-mail inválido.");
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
+      return setErro("Informe um e-mail válido — ele é usado no agendamento e no acesso ao app.");
+    if (!installMode) return setErro("Escolha onde será a instalação.");
+    if (installMode === "local" && endereco.trim().length < 8)
+      return setErro("Informe o endereço completo para o técnico se deslocar.");
+    if (!docsOk) return setErro("Confirme que você terá os documentos no dia da instalação.");
 
     setEnviando(true);
     const { error } = await supabase.from("leads").insert({
       nome: nome.trim().slice(0, 120),
       telefone: maskPhone(telefone).slice(0, 30),
-      email: email.trim().slice(0, 255) || null,
+      email: email.trim().slice(0, 255),
       vehicle_type: vehicle,
       marca: marca.slice(0, 80) || null,
       modelo: modelo.trim().slice(0, 80) || null,
+      install_mode: installMode,
+      endereco: installMode === "loja" ? ENDERECO_LOJA : endereco.trim().slice(0, 300),
+      docs_confirmados: docsOk,
       origem: "landing-page",
     });
     setEnviando(false);
@@ -72,28 +85,58 @@ export function LeadFilter() {
 
   if (ok) {
     return (
-      <div className="surface-panel rounded-2xl p-8 text-center md:p-10">
-        <div className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground radar-pulse">
-          <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+      <div className="surface-panel rounded-2xl p-6 md:p-8">
+        <div className="text-center">
+          <div className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground radar-pulse">
+            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <h3 className="text-2xl">Falta só a data, {nome.split(" ")[0]}</h3>
+          <p className="mx-auto mt-3 max-w-md text-muted-foreground">
+            Dados do seu {veiculoTxt} registrados. Agora escolha o melhor dia e horário para a
+            instalação {installMode === "loja" ? "na nossa base" : "no seu endereço"}.
+          </p>
         </div>
-        <h3 className="text-2xl">Cotação registrada, {nome.split(" ")[0]}</h3>
-        <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-          Seu {vehicle?.toLowerCase()} {marca} {modelo} já está com a nossa equipe. Para adiantar a
-          instalação, chame agora no WhatsApp — respondemos em minutos.
-        </p>
+
+        <div className="mt-6">
+          <CalScheduler
+            prefill={{
+              name: nome.trim(),
+              email: email.trim(),
+              phone: `+55${digits(telefone)}`,
+              notes: `${veiculoTxt} · instalação ${localTxt}`,
+            }}
+            waMessage={waMsg}
+          />
+        </div>
+
+        <div className="mt-5 rounded-xl border border-border bg-white/[0.02] p-4">
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+            Leve no dia da instalação
+          </span>
+          <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+            {DOCUMENTOS.map((d) => (
+              <li key={d} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                {d}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <ExternalLink
           href={wa}
           event="whatsapp_click"
           eventParams={{ location: "lead-form-success" }}
-          className="mt-6 inline-flex h-13 items-center justify-center rounded-xl bg-primary px-7 py-3.5 font-display text-base uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
+          className="mt-5 flex h-12 items-center justify-center rounded-xl border border-border font-display text-sm uppercase tracking-wide text-mist transition hover:border-primary hover:text-white"
         >
-          Falar no WhatsApp agora
+          Prefiro falar no WhatsApp
         </ExternalLink>
       </div>
     );
   }
+
 
   return (
     <div className="surface-panel rounded-2xl p-6 md:p-8">
