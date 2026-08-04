@@ -127,12 +127,13 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.005em;
-    line-height: 1.05;
-    color: oklch(1 0 0);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: balance;
+    color: var(--ink);
   }
+
 
   ::selection {
     background: var(--gold);
