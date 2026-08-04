@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink } from "@/components/ExternalLink";
 import { CalScheduler } from "@/components/CalScheduler";
@@ -43,6 +43,8 @@ export function LeadFilter() {
   const [erro, setErro] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [ok, setOk] = useState(false);
+  const [empresa, setEmpresa] = useState(""); // honeypot: campo invisível, só bot preenche
+  const montadoEm = useRef(Date.now());
 
   const veiculoTxt = `${vehicle ?? "veículo"} ${marca} ${modelo}`.trim();
   const localTxt =
@@ -53,6 +55,15 @@ export function LeadFilter() {
 
   async function enviar() {
     setErro(null);
+
+    // Anti-spam silencioso: bot preencheu o campo-isca ou enviou rápido
+    // demais pra ter passado pelos 4 passos do formulário. Finge sucesso
+    // pro bot (não dá feedback pra ele ajustar o script) sem gravar nada.
+    if (empresa.trim().length > 0 || Date.now() - montadoEm.current < 3000) {
+      setOk(true);
+      return;
+    }
+
     if (nome.trim().length < 2) return setErro("Informe seu nome completo.");
     if (digits(telefone).length < 10) return setErro("Informe um WhatsApp válido com DDD.");
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
@@ -156,6 +167,18 @@ export function LeadFilter() {
           </div>
         ))}
       </div>
+
+      {/* Honeypot anti-spam: invisível e fora da ordem de tab para humanos, tentador para bots */}
+      <input
+        type="text"
+        name="empresa"
+        value={empresa}
+        onChange={(e) => setEmpresa(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
 
       {step === 0 && (
         <div className="animate-rise">
