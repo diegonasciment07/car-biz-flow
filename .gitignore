@@ -35,3 +35,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.vercel
+
+# Lovable editor residue / Supabase CLI cache
+.lovable/
+supabase/.temp/
