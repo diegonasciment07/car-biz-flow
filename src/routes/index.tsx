@@ -377,7 +377,7 @@ function Index() {
                 >
                   Quero este plano
                 </a>
-              </article>
+              </Reveal>
             ))}
           </div>
 
