@@ -6,9 +6,8 @@
 
 /*
  * Sargento Rastreamento Veicular — design system
- * Noir #0D0D0D / Gold #C9A84C. Todos os valores em oklch.
+ * Navy #0B2A4A / Gold #F5B800. Todos os valores em oklch.
  */
-
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -51,25 +50,25 @@
   --color-steel: var(--steel);
   --color-whatsapp: var(--whatsapp);
 
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Space Grotesk", ui-monospace, monospace;
+  --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  --navy-950: oklch(0.15 0 0);
-  --navy-900: oklch(0.1885 0 0);
-  --navy-800: oklch(0.2312 0 0);
-  --navy-700: oklch(0.2795 0 0);
-  --navy-600: oklch(0.3306 0 0);
-  --gold: oklch(0.7385 0.1057 87.5);
-  --gold-light: oklch(0.8834 0.0812 92.1);
-  --gold-dark: oklch(0.6202 0.0961 86.4);
-  --ink: oklch(0.949 0.0035 90);
-  --mist: oklch(0.7261 0.005 90);
-  --steel: oklch(0.5589 0.005 90);
+  --navy-950: oklch(0.1775 0.0334 248.62);
+  --navy-900: oklch(0.2269 0.0507 251.81);
+  --navy-800: oklch(0.2813 0.0692 252.26);
+  --navy-700: oklch(0.3438 0.0844 252.13);
+  --navy-600: oklch(0.4098 0.0975 251.48);
+  --gold: oklch(0.8164 0.1675 84.4);
+  --gold-light: oklch(0.8797 0.1554 90.06);
+  --gold-dark: oklch(0.7027 0.1442 84.17);
+  --ink: oklch(0.946 0.016 253.9);
+  --mist: oklch(0.7562 0.0442 253.87);
+  --steel: oklch(0.5982 0.0535 258);
   --whatsapp: oklch(0.72 0.176 148);
 
   --background: var(--navy-950);
@@ -79,7 +78,7 @@
   --popover: var(--navy-900);
   --popover-foreground: var(--ink);
   --primary: var(--gold);
-  --primary-foreground: oklch(0.15 0 0);
+  --primary-foreground: oklch(0.1775 0.0334 248.62);
   --secondary: var(--navy-800);
   --secondary-foreground: var(--ink);
   --muted: var(--navy-800);
@@ -88,22 +87,26 @@
   --accent-foreground: var(--ink);
   --destructive: oklch(0.62 0.21 25);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
   --ring: var(--gold);
 
-  --gradient-hero: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 65%);
-  --gradient-gold: linear-gradient(120deg, var(--gold-light), var(--gold) 60%, var(--gold-dark));
+  --gradient-hero: radial-gradient(
+      110% 80% at 78% 12%,
+      color-mix(in oklab, var(--navy-700) 90%, transparent) 0%,
+      transparent 62%
+    ),
+    linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 70%);
+  --gradient-gold: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
   --gradient-panel: linear-gradient(
-    165deg,
-    color-mix(in oklab, var(--navy-800) 70%, transparent),
-    color-mix(in oklab, var(--navy-950) 92%, transparent)
+    160deg,
+    color-mix(in oklab, var(--navy-800) 92%, transparent),
+    color-mix(in oklab, var(--navy-950) 88%, transparent)
   );
-  --shadow-gold: 0 10px 30px -18px color-mix(in oklab, var(--gold) 60%, transparent);
-  --shadow-panel: 0 40px 80px -50px oklch(0 0 0 / 90%);
-  --grid-line: color-mix(in oklab, oklch(1 0 0) 4%, transparent);
+  --shadow-gold: 0 14px 40px -14px color-mix(in oklab, var(--gold) 55%, transparent);
+  --shadow-panel: 0 30px 70px -35px oklch(0 0 0 / 85%);
+  --grid-line: color-mix(in oklab, var(--gold) 8%, transparent);
 }
-
 
 @layer base {
   * {
@@ -127,13 +130,12 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    text-wrap: balance;
-    color: var(--ink);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    line-height: 1.05;
+    color: oklch(1 0 0);
   }
-
 
   ::selection {
     background: var(--gold);

@@ -51,14 +51,14 @@ export function LiveTracker() {
   return (
     <div className="surface-panel relative overflow-hidden rounded-3xl p-5 md:p-6">
       <div className="mb-4 flex items-center justify-between">
-        <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-primary">
+        <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-70 [animation:radar-ring_2.2s_ease-out_infinite]" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
           Sinal ao vivo · Manaus/AM
         </span>
-        <span className="text-[10px] uppercase tracking-[0.2em] text-steel">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">
           GPS 12 sat
         </span>
       </div>
@@ -67,13 +67,13 @@ export function LiveTracker() {
         <div className="grid-backdrop absolute inset-0 opacity-70" />
         <svg viewBox="0 0 340 240" className="relative block h-auto w-full">
           {/* malha viária */}
-          <g stroke="currentColor" className="text-ink/8" strokeWidth="10" strokeLinecap="round">
+          <g stroke="currentColor" className="text-white/8" strokeWidth="10" strokeLinecap="round">
             <path d="M-10 180 H 350" />
             <path d="M-10 90 H 350" />
             <path d="M90 -10 V 250" />
             <path d="M250 -10 V 250" />
           </g>
-          <g stroke="currentColor" className="text-ink/12" strokeWidth="1" strokeDasharray="6 8">
+          <g stroke="currentColor" className="text-white/12" strokeWidth="1" strokeDasharray="6 8">
             <path d="M-10 180 H 350" />
             <path d="M90 -10 V 250" />
           </g>
@@ -126,7 +126,7 @@ export function LiveTracker() {
         </svg>
 
         <div className="pointer-events-none absolute left-3 top-3 rounded-lg border border-border bg-navy-950/85 px-3 py-2 backdrop-blur">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-steel">Agora em</p>
+          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-steel">Agora em</p>
           <p className="text-xs text-ink">{rua}</p>
         </div>
       </div>
@@ -138,7 +138,7 @@ export function LiveTracker() {
           ["Status", bloqueado ? "Central acionada" : "Em trajeto"],
         ].map(([k, v]) => (
           <div key={k} className="rounded-xl bg-navy-950/60 p-3">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-steel">{k}</p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-steel">{k}</p>
             <p className={`mt-1 text-sm ${bloqueado ? "text-primary" : "text-ink"}`}>{v}</p>
           </div>
         ))}
@@ -148,15 +148,15 @@ export function LiveTracker() {
         type="button"
         onClick={() => setBloqueado((b) => !b)}
         aria-pressed={bloqueado}
-        className={`mt-3 h-12 w-full rounded-lg text-sm font-medium transition ${
+        className={`mt-3 h-12 w-full rounded-xl font-display text-sm uppercase tracking-wide transition ${
           bloqueado
             ? "bg-primary text-primary-foreground shadow-[var(--shadow-gold)]"
-            : "border border-border text-ink hover:border-primary/70 hover:bg-primary/5"
+            : "border border-border text-white hover:border-primary/70 hover:bg-primary/5"
         }`}
       >
         {bloqueado ? "Veículo bloqueado · liberar" : "Simular bloqueio remoto"}
       </button>
-      <p className="mt-2 text-center text-[10px] uppercase tracking-[0.2em] text-steel">
+      <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-[0.16em] text-steel">
         Demonstração interativa do app Sargento
       </p>
     </div>
