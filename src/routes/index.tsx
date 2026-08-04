@@ -302,10 +302,11 @@ function Index() {
 
       {/* PROVA */}
       <section className="mx-auto max-w-6xl px-5 py-20 md:py-24">
-        <div className="surface-panel grid gap-8 rounded-2xl p-8 md:grid-cols-[auto_1fr] md:items-center md:p-12">
+        <div className="surface-panel scan-sweep grid gap-8 rounded-2xl p-8 md:grid-cols-[auto_1fr] md:items-center md:p-12">
           <p className="font-display text-[clamp(4rem,11vw,7.5rem)] leading-none text-gradient-gold">
-            500+
+            <Counter value={500} suffix="+" duration={1800} />
           </p>
+
           <div>
             <h2 className="text-2xl">Clientes ativos em Manaus, hoje</h2>
             <p className="mt-3 max-w-xl text-muted-foreground">
@@ -331,15 +332,18 @@ function Index() {
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {PLANOS.map((p) => (
-              <article
+            {PLANOS.map((p, pi) => (
+              <Reveal
                 key={p.nome}
-                className={`relative flex flex-col rounded-2xl border p-7 transition ${
+                as="article"
+                delay={pi * 90}
+                className={`hover-lift relative flex flex-col rounded-2xl border p-7 ${
                   p.destaque
                     ? "border-primary bg-navy-800/80 shadow-[var(--shadow-gold)]"
-                    : "border-border bg-navy-950/50"
+                    : "border-border bg-navy-950/50 hover:border-primary/60"
                 }`}
               >
+
                 <span
                   className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
                     p.destaque ? "text-primary" : "text-steel"
