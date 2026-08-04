@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink } from "@/components/ExternalLink";
+import { CalScheduler } from "@/components/CalScheduler";
+import { DOCUMENTOS, ENDERECO_LOJA } from "@/lib/calcom";
 import { MARCAS, whatsappLink } from "@/lib/sargento";
 
 type VehicleType = "Carro" | "Moto" | "Caminhão / Frota";
+type InstallMode = "local" | "loja";
 
 const VEHICLES: { value: VehicleType; label: string; hint: string }[] = [
   { value: "Carro", label: "Carro", hint: "Passeio, SUV, utilitário" },
@@ -11,7 +14,8 @@ const VEHICLES: { value: VehicleType; label: string; hint: string }[] = [
   { value: "Caminhão / Frota", label: "Frota", hint: "Pesados e vários veículos" },
 ];
 
-const STEPS = ["Veículo", "Marca e modelo", "Seus dados"];
+const STEPS = ["Veículo", "Marca e modelo", "Seus dados", "Instalação"];
+
 
 function digits(v: string) {
   return v.replace(/\D/g, "").slice(0, 11);
