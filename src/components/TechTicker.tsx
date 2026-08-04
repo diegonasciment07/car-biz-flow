@@ -26,15 +26,16 @@ export function TechTicker() {
         <ul
           key={k}
           aria-hidden={k === 1}
-          className="marquee flex shrink-0 items-center gap-10 pr-10 font-mono text-[11px] uppercase tracking-[0.2em] text-mist"
+          className="marquee flex shrink-0 items-center gap-10 pr-10 text-[11px] uppercase tracking-[0.22em] text-steel"
         >
           {ITENS.map((i) => (
             <li key={i} className="flex items-center gap-3 whitespace-nowrap">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="h-1 w-1 rounded-full bg-gold/70" />
               {i}
             </li>
           ))}
         </ul>
+
       ))}
     </div>
   );
