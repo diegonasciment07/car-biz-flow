@@ -161,10 +161,10 @@ function Index() {
           height={1200}
           className="absolute inset-y-0 right-0 h-full w-2/3 object-cover object-center opacity-[0.14] [mask-image:linear-gradient(to_left,black,transparent_85%)]"
         />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 md:py-28 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-6 py-20 md:py-28 lg:grid-cols-2 lg:items-start">
           <div className="animate-rise">
             <Eyebrow>Manaus / AM · Central 24 horas</Eyebrow>
-            <h1 className="text-[clamp(2.4rem,5vw,3.9rem)] font-semibold">
+            <h1 className="max-w-xl text-[clamp(2.1rem,3.9vw,3.15rem)] font-semibold">
               Seu veículo rastreado, bloqueado e resgatado por quem{" "}
               <span className="text-gold">atende de madrugada</span>.
             </h1>
@@ -198,7 +198,7 @@ function Index() {
             </dl>
           </div>
 
-          <div className="animate-rise lg:pl-4">
+          <div className="animate-rise lg:sticky lg:top-28">
             <LeadFilter />
           </div>
         </div>
