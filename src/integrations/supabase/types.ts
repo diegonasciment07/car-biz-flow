@@ -17,33 +17,45 @@ export type Database = {
       leads: {
         Row: {
           created_at: string
+          docs_confirmados: boolean
           email: string | null
+          endereco: string | null
           id: string
+          install_mode: string | null
           marca: string | null
           modelo: string | null
           nome: string
+          observacoes: string | null
           origem: string | null
           telefone: string
           vehicle_type: string | null
         }
         Insert: {
           created_at?: string
+          docs_confirmados?: boolean
           email?: string | null
+          endereco?: string | null
           id?: string
+          install_mode?: string | null
           marca?: string | null
           modelo?: string | null
           nome: string
+          observacoes?: string | null
           origem?: string | null
           telefone: string
           vehicle_type?: string | null
         }
         Update: {
           created_at?: string
+          docs_confirmados?: boolean
           email?: string | null
+          endereco?: string | null
           id?: string
+          install_mode?: string | null
           marca?: string | null
           modelo?: string | null
           nome?: string
+          observacoes?: string | null
           origem?: string | null
           telefone?: string
           vehicle_type?: string | null
