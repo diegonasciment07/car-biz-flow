@@ -298,11 +298,18 @@ export function LeadFilter() {
             </button>
             <button
               type="button"
-              onClick={enviar}
-              disabled={enviando}
-              className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 disabled:opacity-60"
+              onClick={() => {
+                setErro(null);
+                if (nome.trim().length < 2) return setErro("Informe seu nome completo.");
+                if (digits(telefone).length < 10)
+                  return setErro("Informe um WhatsApp válido com DDD.");
+                if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
+                  return setErro("Informe um e-mail válido.");
+                setStep(3);
+              }}
+              className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
             >
-              {enviando ? "Enviando..." : "Ver minha cotação"}
+              Continuar
             </button>
           </div>
           <p className="mt-3 text-center text-xs text-steel">
@@ -310,6 +317,93 @@ export function LeadFilter() {
           </p>
         </div>
       )}
+
+      {step === 3 && (
+        <div className="animate-rise">
+          <h3 className="text-xl">Onde será a instalação?</h3>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            {(
+              [
+                ["local", "No meu endereço", "O técnico se desloca até você em Manaus."],
+                ["loja", "Na Sargento", ENDERECO_LOJA],
+              ] as [InstallMode, string, string][]
+            ).map(([value, label, hint]) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setInstallMode(value)}
+                className={`rounded-xl border p-4 text-left transition ${
+                  installMode === value
+                    ? "border-primary bg-primary/10"
+                    : "border-border bg-white/[0.02] hover:border-primary/60 hover:bg-primary/5"
+                }`}
+              >
+                <span className="block font-display text-base uppercase text-white">{label}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">{hint}</span>
+              </button>
+            ))}
+          </div>
+
+          {installMode === "local" && (
+            <label className="mt-4 block animate-rise">
+              <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+                Endereço para o técnico
+              </span>
+              <input
+                value={endereco}
+                onChange={(e) => setEndereco(e.target.value)}
+                maxLength={300}
+                placeholder="Rua, número, bairro e ponto de referência"
+                className="h-12 w-full rounded-xl border border-input bg-navy-950/60 px-4 text-white placeholder:text-steel outline-none transition focus:border-primary"
+              />
+            </label>
+          )}
+
+          <div className="mt-5 rounded-xl border border-border bg-white/[0.02] p-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              Documentos necessários
+            </span>
+            <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+              {DOCUMENTOS.map((d) => (
+                <li key={d} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  {d}
+                </li>
+              ))}
+            </ul>
+            <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-white">
+              <input
+                type="checkbox"
+                checked={docsOk}
+                onChange={(e) => setDocsOk(e.target.checked)}
+                className="mt-0.5 h-4 w-4 accent-[var(--color-primary,theme(colors.amber.400))]"
+              />
+              Confirmo que terei esses documentos no dia da instalação.
+            </label>
+          </div>
+
+          {erro && <p className="mt-4 text-sm text-destructive">{erro}</p>}
+
+          <div className="mt-6 flex gap-3">
+            <button
+              type="button"
+              onClick={() => setStep(2)}
+              className="h-12 rounded-xl border border-border px-5 font-display text-sm uppercase tracking-wide text-mist transition hover:text-white"
+            >
+              Voltar
+            </button>
+            <button
+              type="button"
+              onClick={enviar}
+              disabled={enviando}
+              className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 disabled:opacity-60"
+            >
+              {enviando ? "Enviando..." : "Escolher data da instalação"}
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
