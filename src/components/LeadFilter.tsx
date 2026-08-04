@@ -376,7 +376,7 @@ export function LeadFilter() {
                 type="checkbox"
                 checked={docsOk}
                 onChange={(e) => setDocsOk(e.target.checked)}
-                className="mt-0.5 h-4 w-4 accent-[var(--color-primary,theme(colors.amber.400))]"
+                className="mt-0.5 h-4 w-4 accent-primary"
               />
               Confirmo que terei esses documentos no dia da instalação.
             </label>
