@@ -5,8 +5,8 @@ import { LiveTracker } from "@/components/LiveTracker";
 import { TechTicker } from "@/components/TechTicker";
 import { Counter, Reveal, ScrollProgress } from "@/components/Motion";
 import heroImg from "@/assets/hero-veiculo.jpg";
-import logoAsset from "@/assets/logo-sargento-claro.png.asset.json";
-import iconeAsset from "@/assets/sargento-icone.png.asset.json";
+import logoClaro from "@/assets/logo-sargento-claro.png";
+import sargentoIcone from "@/assets/sargento-icone.png";
 
 import {
   EMPRESA,
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/")({
           legalName: EMPRESA.razaoSocial,
           name: EMPRESA.nomeFantasia,
           taxID: EMPRESA.cnpj,
-          image: iconeAsset.url,
+          image: sargentoIcone,
           telephone: "+5592993294007",
           email: EMPRESA.email,
           address: {
@@ -130,7 +130,7 @@ function Index() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-navy-950/85 backdrop-blur-xl">
         <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-5 py-3.5">
           <img
-            src={logoAsset.url}
+            src={logoClaro}
             alt="Sargento Rastreamento Veicular"
             width={1920}
             height={860}
@@ -473,7 +473,7 @@ function Index() {
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.2fr_1fr_1fr]">
           <div>
             <img
-              src={logoAsset.url}
+              src={logoClaro}
               alt="Sargento Rastreamento Veicular"
               width={1920}
               height={860}
