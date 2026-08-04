@@ -6,8 +6,9 @@
 
 /*
  * Sargento Rastreamento Veicular — design system
- * Navy #0B2A4A / Gold #F5B800. Todos os valores em oklch.
+ * Noir #0D0D0D / Gold #C9A84C. Todos os valores em oklch.
  */
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
