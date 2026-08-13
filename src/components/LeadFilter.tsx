@@ -67,7 +67,7 @@ export function LeadFilter() {
     if (nome.trim().length < 2) return setErro("Informe seu nome completo.");
     if (digits(telefone).length < 10) return setErro("Informe um WhatsApp válido com DDD.");
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim()))
-      return setErro("Informe um e-mail válido — ele é usado no agendamento e no acesso ao app.");
+      return setErro("Informe um e-mail válido. Ele é usado no agendamento e no acesso ao app.");
     if (!installMode) return setErro("Escolha onde será a instalação.");
     if (installMode === "local" && endereco.trim().length < 8)
       return setErro("Informe o endereço completo para o técnico se deslocar.");

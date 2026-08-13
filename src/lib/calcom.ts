@@ -37,4 +37,4 @@ export const DOCUMENTOS = [
   "Comprovante de residência atualizado",
 ] as const;
 
-export const ENDERECO_LOJA = "Av. Cel Sávio Belota, 30 — Novo Aleixo, Manaus/AM";
+export const ENDERECO_LOJA = "Av. Cel Sávio Belota, 30, Novo Aleixo, Manaus/AM";

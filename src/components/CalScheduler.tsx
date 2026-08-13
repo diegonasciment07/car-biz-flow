@@ -16,7 +16,7 @@ export function CalScheduler({ prefill, waMessage }: { prefill: CalPrefill; waMe
         </h4>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
           Seus dados já foram registrados. Confirme a data e o horário da instalação agora mesmo
-          pelo WhatsApp — respondemos em minutos.
+          pelo WhatsApp, respondemos em minutos.
         </p>
         <ExternalLink
           href={whatsappLink(waMessage)}

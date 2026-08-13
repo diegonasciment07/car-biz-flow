@@ -17,7 +17,7 @@ export const EMPRESA = {
   razaoSocial: "Sargento Rastreamento e Locação Veicular Ltda",
   nomeFantasia: "Sargento Rastreamento Veicular",
   cnpj: "54.045.593/0001-31",
-  endereco: "Av. Cel Sávio Belota, 30 — Novo Aleixo, Manaus/AM, CEP 69098-270",
+  endereco: "Av. Cel Sávio Belota, 30, Novo Aleixo, Manaus/AM, CEP 69098-270",
   email: "sargentorastreamento@icloud.com",
   instagram: "https://www.instagram.com/sargentorastreamento/",
 } as const;
@@ -25,12 +25,12 @@ export const EMPRESA = {
 export const RECURSOS = [
   { titulo: "Rastreio em tempo real", desc: "Posição do veículo atualizada continuamente, no app e na web." },
   { titulo: "Bloqueio remoto", desc: "Corte de combustível/ignição acionado pela central em caso de furto." },
-  { titulo: "App mobile próprio", desc: "Aplicativo da Sargento para Android e iOS — não é plataforma genérica." },
+  { titulo: "App mobile próprio", desc: "Aplicativo da Sargento para Android e iOS, não é plataforma genérica." },
   { titulo: "Plataforma web", desc: "Painel completo no computador, com histórico e relatórios de trajeto." },
   { titulo: "Disk emergência", desc: "Central de resgate e assistência 24h que atua quando você aciona." },
   { titulo: "Cerca virtual", desc: "Alerta automático quando o veículo entra ou sai de uma área definida." },
   { titulo: "Hodômetro", desc: "Controle de quilometragem rodada para manutenção e gestão de frota." },
-  { titulo: "Controle de velocidade", desc: "Aviso de excesso de velocidade — ideal para frota e motorista jovem." },
+  { titulo: "Controle de velocidade", desc: "Aviso de excesso de velocidade, ideal para frota e motorista jovem." },
 ] as const;
 
 export const FAQ = [
@@ -39,15 +39,15 @@ export const FAQ = [
     a: `Não é promessa, é número: mais de ${CLIENTES_ATIVOS} clientes ativos e satisfeitos em Manaus, com central de resgate 24h em operação todos os dias.`,
   },
   {
-    q: "Rastreador não impede o roubo, só localiza depois — vale o valor mensal?",
-    a: "Verdade, rastreador não impede o roubo — mas é o que decide se você recupera o carro ou fica só com o boletim. Com rastreador, a chance de recuperação passa de 90%. A central de resgate 24h já bloqueia e aciona por você na hora, e o rastreador ainda pode reduzir o valor do seu seguro em até 20%.",
+    q: "Rastreador não impede o roubo, só localiza depois. Ainda assim vale o valor mensal?",
+    a: "Verdade, rastreador não impede o roubo, mas é o que decide se você recupera o carro ou fica só com o boletim. Com rastreador, a chance de recuperação passa de 90%. A central de resgate 24h já bloqueia e aciona por você na hora, e o rastreador ainda pode reduzir o valor do seu seguro em até 20%.",
   },
   {
-    q: "Já vi rastreamento mais barato em Manaus — por que contratar a Sargento?",
-    a: `${PRECO_MENSAL}/mês, mais uma taxa única de ${TAXA_INSTALACAO} pela instalação de um equipamento de alta precisão e confiança no rastreio. Sem cobranças escondidas. O que separa uma empresa de rastreamento de outra não é quem cobra R$5 a menos — é a precisão do equipamento e quem atende quando você mais precisa, inclusive às 2h da manhã.`,
+    q: "Já vi rastreamento mais barato em Manaus. Por que contratar a Sargento?",
+    a: `${PRECO_MENSAL}/mês, mais uma taxa única de ${TAXA_INSTALACAO} pela instalação de um equipamento de alta precisão e confiança no rastreio. Sem cobranças escondidas. O que separa uma empresa de rastreamento de outra não é quem cobra R$5 a menos, e sim a precisão do equipamento e quem atende quando você mais precisa, inclusive às 2h da manhã.`,
   },
   {
-    q: "Nunca ouvi falar da Sargento — os concorrentes parecem mais estabelecidos.",
+    q: "Nunca ouvi falar da Sargento. Os concorrentes parecem mais estabelecidos.",
     a: `Tempo de logo na praça não recupera carro roubado. Atendimento sim. São mais de ${CLIENTES_ATIVOS} clientes ativos agora, resgate 24h funcionando agora e controle pelo app funcionando agora.`,
   },
 ] as const;

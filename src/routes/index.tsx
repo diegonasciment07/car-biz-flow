@@ -22,7 +22,7 @@ import {
   WHATSAPP_DISPLAY,
 } from "@/lib/sargento";
 
-const TITLE = `Rastreamento Veicular em Manaus | Sargento Rastreamento — ${PRECO_MENSAL}/mês`;
+const TITLE = `Rastreamento Veicular em Manaus | Sargento Rastreamento | ${PRECO_MENSAL}/mês`;
 const DESCRIPTION = `Rastreamento veicular com bloqueio, resgate 24h e app próprio em Manaus. Mais de ${CLIENTES_ATIVOS} clientes ativos. Mensalidade de ${PRECO_MENSAL} e instalação por ${TAXA_INSTALACAO}.`;
 
 export const Route = createFileRoute("/")({
@@ -178,7 +178,7 @@ function Index() {
               <span className="text-gradient-gold">Sargento Rastreamento</span> em Manaus
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              Rastreamento com bloqueio, resgate 24h e assistência de verdade — por{" "}
+              Rastreamento com bloqueio, resgate 24h e assistência de verdade, por{" "}
               <strong className="font-semibold text-white">{PRECO_MENSAL}/mês</strong>, com taxa
               única de instalação de{" "}
               <strong className="font-semibold text-white">{TAXA_INSTALACAO}</strong>.
@@ -223,7 +223,7 @@ function Index() {
               Contratar rastreamento é fácil. Confiar em quem atende quando você precisar, não.
             </h2>
             <p className="text-lg text-muted-foreground">
-              O mercado de rastreamento veicular em Manaus tem muita opção — e é difícil saber qual
+              O mercado de rastreamento veicular em Manaus tem muita opção, e é difícil saber qual
               empresa realmente vai atender na hora que seu carro sumir, e qual vai só te vender uma
               mensalidade e sumir depois da instalação.
             </p>
@@ -240,7 +240,7 @@ function Index() {
           </h2>
           <p className="mt-5 text-lg text-muted-foreground">
             Rastreamento com bloqueio remoto, controle total pelo nosso aplicativo próprio, e uma
-            central de resgate e assistência 24h que atua de verdade quando você aciona — não só um
+            central de resgate e assistência 24h que atua de verdade quando você aciona, não só um
             ponto no mapa.
           </p>
         </div>
@@ -286,7 +286,7 @@ function Index() {
               O controle do seu veículo na sua mão
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              A Sargento tem aplicativo próprio — não é plataforma alugada de terceiros. Você abre o
+              A Sargento tem aplicativo próprio, não uma plataforma alugada de terceiros. Você abre o
               app e vê onde o veículo está, o histórico de trajetos, a cerca virtual e aciona a
               central em um toque.
             </p>
@@ -327,7 +327,7 @@ function Index() {
             <h2 className="text-2xl">Clientes ativos em Manaus, hoje</h2>
             <p className="mt-3 max-w-xl text-muted-foreground">
               Não é número de campanha. É gente pagando a mensalidade porque o serviço funciona de
-              verdade — com equipamento de alta precisão e central que atende às 2h da manhã.
+              verdade, com equipamento de alta precisão e central que atende às 2h da manhã.
             </p>
           </div>
         </div>
@@ -342,7 +342,7 @@ function Index() {
               Um preço, sem letra miúda: {PRECO_MENSAL}/mês
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              Moto, carro ou veículo pesado — a mesma mensalidade e a mesma taxa de instalação.
+              Moto, carro ou veículo pesado, a mesma mensalidade e a mesma taxa de instalação.
               Sem cobrança escondida. Escolha seu veículo abaixo.
             </p>
           </div>
@@ -483,7 +483,7 @@ function Index() {
         </div>
         <div className="border-t border-border">
           <p className="mx-auto max-w-6xl px-5 py-6 font-mono text-[10px] uppercase tracking-[0.15em] text-steel">
-            © {new Date().getFullYear()} {EMPRESA.nomeFantasia} — Manaus / AM
+            © {new Date().getFullYear()} {EMPRESA.nomeFantasia} · Manaus / AM
           </p>
         </div>
       </footer>
