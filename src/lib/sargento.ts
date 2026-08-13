@@ -9,6 +9,10 @@ export const WHATSAPP_DEFAULT = whatsappLink(
   "Quero saber mais sobre o rastreamento veicular da Sargento",
 );
 
+export const PRECO_MENSAL = "R$49,90";
+export const TAXA_INSTALACAO = "R$50,00";
+export const CLIENTES_ATIVOS = 500;
+
 export const EMPRESA = {
   razaoSocial: "Sargento Rastreamento e Locação Veicular Ltda",
   nomeFantasia: "Sargento Rastreamento Veicular",
@@ -32,7 +36,7 @@ export const RECURSOS = [
 export const FAQ = [
   {
     q: "A Sargento Rastreamento é confiável ou some depois que eu pagar a instalação?",
-    a: "Não é promessa, é número: mais de 500 clientes ativos e satisfeitos em Manaus, com central de resgate 24h em operação todos os dias.",
+    a: `Não é promessa, é número: mais de ${CLIENTES_ATIVOS} clientes ativos e satisfeitos em Manaus, com central de resgate 24h em operação todos os dias.`,
   },
   {
     q: "Rastreador não impede o roubo, só localiza depois — vale o valor mensal?",
@@ -40,11 +44,11 @@ export const FAQ = [
   },
   {
     q: "Já vi rastreamento mais barato em Manaus — por que contratar a Sargento?",
-    a: "R$49,90/mês, mais uma taxa simbólica de R$50,00 pela instalação de um equipamento de alta precisão e confiança no rastreio. Sem cobranças escondidas. O que separa uma empresa de rastreamento de outra não é quem cobra R$5 a menos — é a precisão do equipamento e quem atende quando você mais precisa, inclusive às 2h da manhã.",
+    a: `${PRECO_MENSAL}/mês, mais uma taxa única de ${TAXA_INSTALACAO} pela instalação de um equipamento de alta precisão e confiança no rastreio. Sem cobranças escondidas. O que separa uma empresa de rastreamento de outra não é quem cobra R$5 a menos — é a precisão do equipamento e quem atende quando você mais precisa, inclusive às 2h da manhã.`,
   },
   {
     q: "Nunca ouvi falar da Sargento — os concorrentes parecem mais estabelecidos.",
-    a: "Tempo de logo na praça não recupera carro roubado. Atendimento sim. São mais de 500 clientes ativos agora, resgate 24h funcionando agora e controle pelo app funcionando agora.",
+    a: `Tempo de logo na praça não recupera carro roubado. Atendimento sim. São mais de ${CLIENTES_ATIVOS} clientes ativos agora, resgate 24h funcionando agora e controle pelo app funcionando agora.`,
   },
 ] as const;
 

@@ -2,24 +2,28 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "@/components/ExternalLink";
 import { LeadFilter } from "@/components/LeadFilter";
 import { LiveTracker } from "@/components/LiveTracker";
+import { PricingPlate } from "@/components/PricingPlate";
 import { TechTicker } from "@/components/TechTicker";
 import { Counter, Reveal, ScrollProgress } from "@/components/Motion";
+import { FEATURES } from "@/lib/features";
 import heroImg from "@/assets/hero-veiculo.jpg";
 import logoClaro from "@/assets/logo-sargento-claro.png";
 import sargentoIcone from "@/assets/sargento-icone.png";
 
 import {
+  CLIENTES_ATIVOS,
   EMPRESA,
   FAQ,
   PLANOS,
+  PRECO_MENSAL,
   RECURSOS,
+  TAXA_INSTALACAO,
   WHATSAPP_DEFAULT,
   WHATSAPP_DISPLAY,
 } from "@/lib/sargento";
 
-const TITLE = "Rastreamento Veicular em Manaus | Sargento Rastreamento — R$49,90/mês";
-const DESCRIPTION =
-  "Rastreamento veicular com bloqueio, resgate 24h e app próprio em Manaus. Mais de 500 clientes ativos. Mensalidade de R$49,90 e instalação por R$50,00.";
+const TITLE = `Rastreamento Veicular em Manaus | Sargento Rastreamento — ${PRECO_MENSAL}/mês`;
+const DESCRIPTION = `Rastreamento veicular com bloqueio, resgate 24h e app próprio em Manaus. Mais de ${CLIENTES_ATIVOS} clientes ativos. Mensalidade de ${PRECO_MENSAL} e instalação por ${TAXA_INSTALACAO}.`;
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -74,7 +78,7 @@ export const Route = createFileRoute("/")({
               name: `Rastreamento ${p.nome}`,
               price: "49.90",
               priceCurrency: "BRL",
-              description: `Rastreamento veicular para ${p.nome.toLowerCase()} em Manaus com ${p.itens.join(", ")}. Instalação por R$50,00.`,
+              description: `Rastreamento veicular para ${p.nome.toLowerCase()} em Manaus com ${p.itens.join(", ")}. Instalação por ${TAXA_INSTALACAO}.`,
             })),
           },
         }),
@@ -170,13 +174,14 @@ function Index() {
           <div className="max-w-2xl animate-rise">
             <Eyebrow>Central de resgate 24h · Manaus / AM</Eyebrow>
             <h1 className="text-[clamp(2.3rem,6.2vw,4.2rem)] font-bold">
-              Mais de 500 clientes confiam na{" "}
+              Mais de {CLIENTES_ATIVOS} clientes confiam na{" "}
               <span className="text-gradient-gold">Sargento Rastreamento</span> em Manaus
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               Rastreamento com bloqueio, resgate 24h e assistência de verdade — por{" "}
-              <strong className="font-semibold text-white">R$49,90/mês</strong>, com taxa simbólica
-              de instalação de <strong className="font-semibold text-white">R$50,00</strong>.
+              <strong className="font-semibold text-white">{PRECO_MENSAL}/mês</strong>, com taxa
+              única de instalação de{" "}
+              <strong className="font-semibold text-white">{TAXA_INSTALACAO}</strong>.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <CtaWhats />
@@ -189,7 +194,7 @@ function Index() {
             </div>
             <dl className="mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-border pt-7">
               {[
-                { n: 500, suffix: "+", l: "clientes ativos" },
+                { n: CLIENTES_ATIVOS, suffix: "+", l: "clientes ativos" },
                 { n: 24, suffix: "h", l: "resgate e disk" },
                 { n: 90, prefix: "+", suffix: "%", l: "chance de recuperação" },
               ].map((s) => (
@@ -241,23 +246,33 @@ function Index() {
         </div>
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-          {RECURSOS.map((r, i) => (
-            <Reveal
-              key={r.titulo}
-              as="article"
-              delay={i * 60}
-              className="group relative bg-navy-900/80 p-6 transition hover:bg-navy-800"
-            >
-              <span className="font-mono text-[11px] text-primary/70">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-3 text-base tracking-wide transition group-hover:text-primary">
-                {r.titulo}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">{r.desc}</p>
-              <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100" />
-            </Reveal>
-          ))}
+          {RECURSOS.map((r, i) => {
+            const Icon = FEATURES[i]?.icon ?? FEATURES[0]!.icon;
+            return (
+              <Reveal
+                key={r.titulo}
+                as="article"
+                delay={i * 60}
+                className="group relative bg-navy-900/80 p-5 transition hover:bg-navy-800"
+              >
+                <details className="group/d">
+                  <summary className="flex cursor-pointer list-none items-center gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary transition group-hover:bg-primary/15">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h3 className="text-sm tracking-wide transition group-hover:text-primary">
+                      {r.titulo}
+                    </h3>
+                    <span className="ml-auto shrink-0 font-mono text-primary/60 transition group-open/d:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 pl-12 text-sm text-muted-foreground">{r.desc}</p>
+                </details>
+                <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100" />
+              </Reveal>
+            );
+          })}
         </div>
 
       </section>
@@ -305,7 +320,7 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-20 md:py-24">
         <div className="surface-panel scan-sweep grid gap-8 rounded-2xl p-8 md:grid-cols-[auto_1fr] md:items-center md:p-12">
           <p className="font-display text-[clamp(4rem,11vw,7.5rem)] leading-none text-gradient-gold">
-            <Counter value={500} suffix="+" duration={1800} />
+            <Counter value={CLIENTES_ATIVOS} suffix="+" duration={1800} />
           </p>
 
           <div>
@@ -324,70 +339,16 @@ function Index() {
           <div className="max-w-2xl">
             <Eyebrow>Planos e preços</Eyebrow>
             <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)]">
-              Um preço, sem letra miúda: R$49,90/mês
+              Um preço, sem letra miúda: {PRECO_MENSAL}/mês
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              Moto, carro ou veículo pesado — a mesma mensalidade e a mesma taxa simbólica de
-              instalação. Sem cobrança escondida.
+              Moto, carro ou veículo pesado — a mesma mensalidade e a mesma taxa de instalação.
+              Sem cobrança escondida. Escolha seu veículo abaixo.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {PLANOS.map((p, pi) => (
-              <Reveal
-                key={p.nome}
-                as="article"
-                delay={pi * 90}
-                className={`hover-lift relative flex flex-col rounded-2xl border p-7 ${
-                  p.destaque
-                    ? "border-primary bg-navy-800/80 shadow-[var(--shadow-gold)]"
-                    : "border-border bg-navy-950/50 hover:border-primary/60"
-                }`}
-              >
-
-                <span
-                  className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
-                    p.destaque ? "text-primary" : "text-steel"
-                  }`}
-                >
-                  {p.tag}
-                </span>
-                <h3 className="mt-2 text-2xl">{p.nome}</h3>
-                <p className="mt-5 flex items-end gap-1.5">
-                  <span className="font-display text-4xl text-white">R$49,90</span>
-                  <span className="pb-1 text-sm text-muted-foreground">/mês</span>
-                </p>
-                <p className="mt-1.5 text-sm text-primary">+ instalação de R$50,00</p>
-                <ul className="mt-6 flex-1 space-y-2.5 border-t border-border pt-6">
-                  {p.itens.map((i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-ink">
-                      <svg viewBox="0 0 24 24" className="mt-0.5 h-4 w-4 shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth="3">
-                        <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      {i}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="#cotacao"
-                  className={`mt-7 inline-flex h-12 items-center justify-center rounded-xl font-display text-sm uppercase tracking-wide transition ${
-                    p.destaque
-                      ? "bg-primary text-primary-foreground hover:brightness-110"
-                      : "border border-border text-white hover:border-primary/70"
-                  }`}
-                >
-                  Quero este plano
-                </a>
-              </Reveal>
-            ))}
-          </div>
-
-          <p className="mx-auto mt-10 max-w-2xl text-center text-muted-foreground">
-            Taxa simbólica de instalação de R$50,00 para um equipamento de alta precisão, com
-            rastreamento confiável e acompanhamento em tempo real.
-          </p>
-          <div className="mt-7 flex justify-center">
-            <CtaWhats />
+          <div className="mt-12 mx-auto max-w-xl">
+            <PricingPlate />
           </div>
         </div>
       </section>
@@ -457,7 +418,7 @@ function Index() {
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
             Em minutos você tira suas dúvidas e pode agendar a instalação do equipamento de alta
-            precisão por uma taxa simbólica de R$50,00.
+            precisão por uma taxa única de {TAXA_INSTALACAO}.
           </p>
           <div className="mt-9 flex justify-center">
             <CtaWhats />
