@@ -5,6 +5,14 @@ export function whatsappLink(message: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
+/** Link do WhatsApp pro número de um lead (não o da própria empresa).
+ * Aceita telefone em qualquer formatação; assume DDI 55 quando ausente. */
+export function whatsappLinkTo(telefone: string, message: string) {
+  let d = telefone.replace(/\D/g, "");
+  if (!d.startsWith("55") || d.length <= 11) d = `55${d}`;
+  return `https://wa.me/${d}?text=${encodeURIComponent(message)}`;
+}
+
 export const WHATSAPP_DEFAULT = whatsappLink(
   "Quero saber mais sobre o rastreamento veicular da Sargento",
 );
@@ -23,14 +31,38 @@ export const EMPRESA = {
 } as const;
 
 export const RECURSOS = [
-  { titulo: "Rastreio em tempo real", desc: "Posição do veículo atualizada continuamente, no app e na web." },
-  { titulo: "Bloqueio remoto", desc: "Corte de combustível/ignição acionado pela central em caso de furto." },
-  { titulo: "App mobile próprio", desc: "Aplicativo da Sargento para Android e iOS, não é plataforma genérica." },
-  { titulo: "Plataforma web", desc: "Painel completo no computador, com histórico e relatórios de trajeto." },
-  { titulo: "Disk emergência", desc: "Central de resgate e assistência 24h que atua quando você aciona." },
-  { titulo: "Cerca virtual", desc: "Alerta automático quando o veículo entra ou sai de uma área definida." },
-  { titulo: "Hodômetro", desc: "Controle de quilometragem rodada para manutenção e gestão de frota." },
-  { titulo: "Controle de velocidade", desc: "Aviso de excesso de velocidade, ideal para frota e motorista jovem." },
+  {
+    titulo: "Rastreio em tempo real",
+    desc: "Posição do veículo atualizada continuamente, no app e na web.",
+  },
+  {
+    titulo: "Bloqueio remoto",
+    desc: "Corte de combustível/ignição acionado pela central em caso de furto.",
+  },
+  {
+    titulo: "App mobile próprio",
+    desc: "Aplicativo da Sargento para Android e iOS, não é plataforma genérica.",
+  },
+  {
+    titulo: "Plataforma web",
+    desc: "Painel completo no computador, com histórico e relatórios de trajeto.",
+  },
+  {
+    titulo: "Disk emergência",
+    desc: "Central de resgate e assistência 24h que atua quando você aciona.",
+  },
+  {
+    titulo: "Cerca virtual",
+    desc: "Alerta automático quando o veículo entra ou sai de uma área definida.",
+  },
+  {
+    titulo: "Hodômetro",
+    desc: "Controle de quilometragem rodada para manutenção e gestão de frota.",
+  },
+  {
+    titulo: "Controle de velocidade",
+    desc: "Aviso de excesso de velocidade, ideal para frota e motorista jovem.",
+  },
 ] as const;
 
 export const FAQ = [
@@ -56,25 +88,67 @@ export const PLANOS = [
   {
     nome: "Moto",
     tag: "Duas rodas",
-    itens: ["Rastreio", "Bloqueio remoto", "App mobile", "Plataforma web", "Disk emergência", "Cerca virtual", "Hodômetro", "Controle de velocidade"],
+    itens: [
+      "Rastreio",
+      "Bloqueio remoto",
+      "App mobile",
+      "Plataforma web",
+      "Disk emergência",
+      "Cerca virtual",
+      "Hodômetro",
+      "Controle de velocidade",
+    ],
     destaque: false,
   },
   {
     nome: "Carro",
     tag: "Mais contratado",
-    itens: ["Rastreio", "Bloqueio remoto", "App mobile", "Plataforma web", "Disk emergência", "Cerca virtual", "Hodômetro", "Controle de velocidade"],
+    itens: [
+      "Rastreio",
+      "Bloqueio remoto",
+      "App mobile",
+      "Plataforma web",
+      "Disk emergência",
+      "Cerca virtual",
+      "Hodômetro",
+      "Controle de velocidade",
+    ],
     destaque: true,
   },
   {
     nome: "Veículos pesados",
     tag: "Frota e caminhão",
-    itens: ["Rastreio", "Bloqueio remoto", "App mobile", "Plataforma web", "Disk emergência", "Controle de velocidade"],
+    itens: [
+      "Rastreio",
+      "Bloqueio remoto",
+      "App mobile",
+      "Plataforma web",
+      "Disk emergência",
+      "Controle de velocidade",
+    ],
     destaque: false,
   },
 ] as const;
 
 export const MARCAS = [
-  "Chevrolet", "Fiat", "Ford", "Honda", "Hyundai", "Jeep", "Nissan", "Peugeot",
-  "Renault", "Toyota", "Volkswagen", "Mitsubishi", "BMW", "Mercedes-Benz",
-  "Yamaha", "Suzuki", "Scania", "Volvo", "Iveco", "Outra",
+  "Chevrolet",
+  "Fiat",
+  "Ford",
+  "Honda",
+  "Hyundai",
+  "Jeep",
+  "Nissan",
+  "Peugeot",
+  "Renault",
+  "Toyota",
+  "Volkswagen",
+  "Mitsubishi",
+  "BMW",
+  "Mercedes-Benz",
+  "Yamaha",
+  "Suzuki",
+  "Scania",
+  "Volvo",
+  "Iveco",
+  "Outra",
 ] as const;
