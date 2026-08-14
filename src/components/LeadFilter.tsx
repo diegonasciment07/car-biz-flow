@@ -1,15 +1,10 @@
 import { useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { ExternalLink, openExternal } from "@/components/ExternalLink";
+import { ExternalLink } from "@/components/ExternalLink";
 import { CalScheduler } from "@/components/CalScheduler";
 import { DOCUMENTOS, ENDERECO_LOJA } from "@/lib/calcom";
 import { MARCAS, whatsappLink } from "@/lib/sargento";
-
-type LeadFilterProps = {
-  /** Quando "whatsapp", o formulário serve pra capturar os dados antes de
-   * abrir o WhatsApp — ao terminar, abre direto em vez de mostrar a agenda. */
-  intent?: "whatsapp" | undefined;
-};
+import { digits, maskPhone } from "@/lib/phone";
 
 type VehicleType = "Carro" | "Moto" | "Caminhão / Frota";
 type InstallMode = "local" | "loja";
@@ -22,19 +17,7 @@ const VEHICLES: { value: VehicleType; label: string; hint: string }[] = [
 
 const STEPS = ["Veículo", "Marca e modelo", "Seus dados", "Instalação"];
 
-function digits(v: string) {
-  return v.replace(/\D/g, "").slice(0, 11);
-}
-
-function maskPhone(v: string) {
-  const d = digits(v);
-  if (d.length <= 2) return d;
-  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-}
-
-export function LeadFilter({ intent }: LeadFilterProps) {
+export function LeadFilter() {
   const [step, setStep] = useState(0);
   const [vehicle, setVehicle] = useState<VehicleType | null>(null);
   const [marca, setMarca] = useState("");
@@ -55,9 +38,7 @@ export function LeadFilter({ intent }: LeadFilterProps) {
   const localTxt =
     installMode === "loja" ? `na loja (${ENDERECO_LOJA})` : `no endereço: ${endereco}`;
   const waMsg =
-    intent === "whatsapp"
-      ? `Olá! Sou ${nome || "cliente"} e quero falar sobre o rastreamento do meu ${veiculoTxt}.`.trim()
-      : `Olá! Sou ${nome || "cliente"} e quero agendar a instalação do rastreador no meu ${veiculoTxt} ${installMode ? localTxt : ""}`.trim();
+    `Olá! Sou ${nome || "cliente"} e quero agendar a instalação do rastreador no meu ${veiculoTxt} ${installMode ? localTxt : ""}`.trim();
   const wa = whatsappLink(waMsg);
 
   async function enviar() {
@@ -99,37 +80,6 @@ export function LeadFilter({ intent }: LeadFilterProps) {
       return;
     }
     setOk(true);
-    if (intent === "whatsapp") openExternal(wa);
-  }
-
-  if (ok && intent === "whatsapp") {
-    return (
-      <div className="surface-panel rounded-2xl p-6 md:p-8 text-center">
-        <div className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground radar-pulse">
-          <svg
-            viewBox="0 0 24 24"
-            className="h-7 w-7"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <h3 className="text-2xl">Prontinho, {nome.split(" ")[0]}!</h3>
-        <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-          Seus dados foram registrados. Abrindo o WhatsApp pra você falar com a gente agora.
-        </p>
-        <ExternalLink
-          href={wa}
-          event="whatsapp_click"
-          eventParams={{ location: "lead-form-whatsapp-intent" }}
-          className="mt-6 inline-flex h-12 items-center justify-center rounded-xl bg-primary px-7 font-display text-sm uppercase tracking-wide text-primary-foreground transition hover:brightness-110"
-        >
-          Não abriu? Toque aqui
-        </ExternalLink>
-      </div>
-    );
   }
 
   if (ok) {
@@ -464,11 +414,7 @@ export function LeadFilter({ intent }: LeadFilterProps) {
               disabled={enviando}
               className="h-12 flex-1 rounded-xl bg-primary px-5 font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 disabled:opacity-60"
             >
-              {enviando
-                ? "Enviando..."
-                : intent === "whatsapp"
-                  ? "Falar no WhatsApp agora"
-                  : "Escolher data da instalação"}
+              {enviando ? "Enviando..." : "Escolher data da instalação"}
             </button>
           </div>
         </div>

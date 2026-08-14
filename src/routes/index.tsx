@@ -5,6 +5,7 @@ import { LeadFilter } from "@/components/LeadFilter";
 import { LiveTracker } from "@/components/LiveTracker";
 import { PricingPlate } from "@/components/PricingPlate";
 import { TechTicker } from "@/components/TechTicker";
+import { WhatsAppLeadModal } from "@/components/WhatsAppLeadModal";
 import { Counter, Reveal, ScrollProgress } from "@/components/Motion";
 import { FEATURES } from "@/lib/features";
 import heroImg from "@/assets/hero-veiculo.jpg";
@@ -135,14 +136,13 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 function Index() {
-  const [whatsappIntent, setWhatsappIntent] = useState(false);
+  const [waModalOpen, setWaModalOpen] = useState(false);
 
-  // Qualquer CTA de WhatsApp fora do fluxo de agendamento passa primeiro
-  // pelo formulário (captura os dados) e só abre o WhatsApp no final.
-  function irParaFormularioWhatsApp(location: string) {
+  // Qualquer CTA de WhatsApp fora do fluxo de agendamento abre o modal de
+  // captação rápida em vez de ir direto pro WhatsApp.
+  function abrirModalWhatsApp(location: string) {
     trackConversion("whatsapp_click", { location });
-    setWhatsappIntent(true);
-    document.getElementById("cotacao")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setWaModalOpen(true);
   }
 
   return (
@@ -173,7 +173,7 @@ function Index() {
           </nav>
           <button
             type="button"
-            onClick={() => irParaFormularioWhatsApp("header")}
+            onClick={() => abrirModalWhatsApp("header")}
             className="rounded-lg bg-primary px-4 py-2.5 font-display text-xs uppercase tracking-wider text-primary-foreground transition hover:brightness-110 md:px-5 md:text-sm"
           >
             WhatsApp
@@ -207,7 +207,7 @@ function Index() {
               <strong className="font-semibold text-white">{TAXA_INSTALACAO}</strong>.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <CtaWhats onClick={() => irParaFormularioWhatsApp("hero")} />
+              <CtaWhats onClick={() => abrirModalWhatsApp("hero")} />
               <a
                 href="#cotacao"
                 className="inline-flex items-center justify-center rounded-xl border border-border px-7 py-4 font-display text-base uppercase tracking-wide text-white transition hover:border-primary/70 hover:bg-white/5"
@@ -374,7 +374,7 @@ function Index() {
           </div>
 
           <div className="mt-12 mx-auto max-w-xl">
-            <PricingPlate onWantsWhatsApp={irParaFormularioWhatsApp} />
+            <PricingPlate onWantsWhatsApp={abrirModalWhatsApp} />
           </div>
         </div>
       </section>
@@ -409,7 +409,7 @@ function Index() {
               ))}
             </ul>
           </div>
-          <LeadFilter intent={whatsappIntent ? "whatsapp" : undefined} />
+          <LeadFilter />
         </div>
       </section>
 
@@ -450,7 +450,7 @@ function Index() {
             precisão por uma taxa única de {TAXA_INSTALACAO}.
           </p>
           <div className="mt-9 flex justify-center">
-            <CtaWhats onClick={() => irParaFormularioWhatsApp("cta-final")} />
+            <CtaWhats onClick={() => abrirModalWhatsApp("cta-final")} />
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-steel">
             {WHATSAPP_DISPLAY} · Manaus / AM
@@ -489,7 +489,7 @@ function Index() {
             </p>
             <button
               type="button"
-              onClick={() => irParaFormularioWhatsApp("footer")}
+              onClick={() => abrirModalWhatsApp("footer")}
               className="inline-flex items-center gap-2 text-ink transition hover:text-primary"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
@@ -530,7 +530,7 @@ function Index() {
       {/* WHATSAPP FLUTUANTE */}
       <button
         type="button"
-        onClick={() => irParaFormularioWhatsApp("float")}
+        onClick={() => abrirModalWhatsApp("float")}
         aria-label="Falar no WhatsApp"
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-navy-950 shadow-[var(--shadow-panel)] transition hover:scale-105"
       >
@@ -538,6 +538,8 @@ function Index() {
           <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm5.8 14.05c-.25.69-1.45 1.32-2 1.4-.53.08-1.19.11-1.92-.12a17.6 17.6 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17s.8-2.25 1.08-2.56c.28-.31.61-.39.81-.39l.58.01c.19.01.44-.07.69.53.25.6.85 2.07.93 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5l-.44.52c-.15.15-.3.32-.13.62.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.55.35.07.13.07.74-.18 1.43Z" />
         </svg>
       </button>
+
+      <WhatsAppLeadModal open={waModalOpen} onOpenChange={setWaModalOpen} />
     </div>
   );
 }
