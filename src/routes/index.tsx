@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://sargentorastreamento.com.br/" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
       {
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/")({
           "rastreamento veicular Manaus, rastreador de carro Manaus, rastreador de moto Manaus, bloqueio veicular, resgate 24h Manaus, Sargento Rastreamento",
       },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://sargentorastreamento.com.br/" }],
     scripts: [
       {
         type: "application/ld+json",
