@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { ExternalLink } from "@/components/ExternalLink";
 import { FEATURES } from "@/lib/features";
-import { PLANOS, PRECO_MENSAL, TAXA_INSTALACAO, WHATSAPP_DEFAULT } from "@/lib/sargento";
+import { PLANOS, PRECO_MENSAL, TAXA_INSTALACAO } from "@/lib/sargento";
+
+type PricingPlateProps = {
+  /** Chamado ao clicar em "Quero o plano X" — direciona pro formulário em vez de abrir o WhatsApp direto. */
+  onWantsWhatsApp: (location: string) => void;
+};
 
 /** Placa de preço única com seletor de veículo — substitui 3 cards que repetiam a mesma lista de recursos. */
-export function PricingPlate() {
+export function PricingPlate({ onWantsWhatsApp }: PricingPlateProps) {
   const [nome, setNome] = useState<(typeof PLANOS)[number]["nome"]>("Carro");
   const plano = PLANOS.find((p) => p.nome === nome) ?? PLANOS[1]!;
 
@@ -57,14 +61,13 @@ export function PricingPlate() {
         })}
       </ul>
 
-      <ExternalLink
-        href={WHATSAPP_DEFAULT}
-        event="whatsapp_click"
-        eventParams={{ location: `plano-${plano.nome}` }}
+      <button
+        type="button"
+        onClick={() => onWantsWhatsApp(`plano-${plano.nome}`)}
         className="mt-9 flex h-12 w-full items-center justify-center rounded-xl bg-primary font-display text-sm uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110"
       >
         Quero o plano {plano.nome}
-      </ExternalLink>
+      </button>
     </div>
   );
 }

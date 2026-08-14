@@ -13,10 +13,6 @@ export function whatsappLinkTo(telefone: string, message: string) {
   return `https://wa.me/${d}?text=${encodeURIComponent(message)}`;
 }
 
-export const WHATSAPP_DEFAULT = whatsappLink(
-  "Quero saber mais sobre o rastreamento veicular da Sargento",
-);
-
 export const PRECO_MENSAL = "R$49,90";
 export const TAXA_INSTALACAO = "R$50,00";
 export const CLIENTES_ATIVOS = 500;

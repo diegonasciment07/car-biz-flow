@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ExternalLink } from "@/components/ExternalLink";
+import { ExternalLink, trackConversion } from "@/components/ExternalLink";
 import { LeadFilter } from "@/components/LeadFilter";
 import { LiveTracker } from "@/components/LiveTracker";
 import { PricingPlate } from "@/components/PricingPlate";
@@ -18,7 +19,6 @@ import {
   PRECO_MENSAL,
   RECURSOS,
   TAXA_INSTALACAO,
-  WHATSAPP_DEFAULT,
   WHATSAPP_DISPLAY,
 } from "@/lib/sargento";
 
@@ -99,19 +99,26 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-function CtaWhats({ className = "", label = "Falar no WhatsApp agora" }) {
+function CtaWhats({
+  className = "",
+  label = "Falar no WhatsApp agora",
+  onClick,
+}: {
+  className?: string;
+  label?: string;
+  onClick: () => void;
+}) {
   return (
-    <ExternalLink
-      href={WHATSAPP_DEFAULT}
-      event="whatsapp_click"
-      eventParams={{ location: label }}
+    <button
+      type="button"
+      onClick={onClick}
       className={`inline-flex items-center justify-center gap-2.5 rounded-xl bg-primary px-7 py-4 font-display text-base uppercase tracking-wide text-primary-foreground shadow-[var(--shadow-gold)] transition hover:brightness-110 active:scale-[0.99] ${className}`}
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
         <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm5.8 14.05c-.25.69-1.45 1.32-2 1.4-.53.08-1.19.11-1.92-.12a17.6 17.6 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17s.8-2.25 1.08-2.56c.28-.31.61-.39.81-.39l.58.01c.19.01.44-.07.69.53.25.6.85 2.07.93 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5l-.44.52c-.15.15-.3.32-.13.62.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.55.35.07.13.07.74-.18 1.43Z" />
       </svg>
       {label}
-    </ExternalLink>
+    </button>
   );
 }
 
@@ -128,6 +135,16 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 function Index() {
+  const [whatsappIntent, setWhatsappIntent] = useState(false);
+
+  // Qualquer CTA de WhatsApp fora do fluxo de agendamento passa primeiro
+  // pelo formulário (captura os dados) e só abre o WhatsApp no final.
+  function irParaFormularioWhatsApp(location: string) {
+    trackConversion("whatsapp_click", { location });
+    setWhatsappIntent(true);
+    document.getElementById("cotacao")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* HEADER */}
@@ -141,23 +158,29 @@ function Index() {
             className="h-9 w-auto md:h-11"
           />
           <nav className="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] text-mist md:flex">
-            <a href="#solucao" className="transition hover:text-primary">Solução</a>
-            <a href="#planos" className="transition hover:text-primary">Planos</a>
-            <a href="#cotacao" className="transition hover:text-primary">Agendar</a>
-            <a href="#duvidas" className="transition hover:text-primary">Dúvidas</a>
+            <a href="#solucao" className="transition hover:text-primary">
+              Solução
+            </a>
+            <a href="#planos" className="transition hover:text-primary">
+              Planos
+            </a>
+            <a href="#cotacao" className="transition hover:text-primary">
+              Agendar
+            </a>
+            <a href="#duvidas" className="transition hover:text-primary">
+              Dúvidas
+            </a>
           </nav>
-          <ExternalLink
-            href={WHATSAPP_DEFAULT}
-            event="whatsapp_click"
-            eventParams={{ location: "header" }}
+          <button
+            type="button"
+            onClick={() => irParaFormularioWhatsApp("header")}
             className="rounded-lg bg-primary px-4 py-2.5 font-display text-xs uppercase tracking-wider text-primary-foreground transition hover:brightness-110 md:px-5 md:text-sm"
           >
             WhatsApp
-          </ExternalLink>
+          </button>
         </div>
         <ScrollProgress />
       </header>
-
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -184,7 +207,7 @@ function Index() {
               <strong className="font-semibold text-white">{TAXA_INSTALACAO}</strong>.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <CtaWhats />
+              <CtaWhats onClick={() => irParaFormularioWhatsApp("hero")} />
               <a
                 href="#cotacao"
                 className="inline-flex items-center justify-center rounded-xl border border-border px-7 py-4 font-display text-base uppercase tracking-wide text-white transition hover:border-primary/70 hover:bg-white/5"
@@ -213,7 +236,6 @@ function Index() {
       </section>
 
       <TechTicker />
-
 
       {/* PROBLEMA */}
       <section className="border-y border-border bg-navy-900/40">
@@ -274,7 +296,6 @@ function Index() {
             );
           })}
         </div>
-
       </section>
 
       {/* APP PRÓPRIO */}
@@ -286,8 +307,8 @@ function Index() {
               O controle do seu veículo na sua mão
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              A Sargento tem aplicativo próprio, não uma plataforma alugada de terceiros. Você abre o
-              app e vê onde o veículo está, o histórico de trajetos, a cerca virtual e aciona a
+              A Sargento tem aplicativo próprio, não uma plataforma alugada de terceiros. Você abre
+              o app e vê onde o veículo está, o histórico de trajetos, a cerca virtual e aciona a
               central em um toque.
             </p>
             <ul className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -298,7 +319,13 @@ function Index() {
                 "Disk emergência em 1 toque",
               ].map((i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-ink">
-                  <svg viewBox="0 0 24 24" className="mt-0.5 h-4 w-4 shrink-0 text-primary" fill="none" stroke="currentColor" strokeWidth="3">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                  >
                     <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   {i}
@@ -312,7 +339,6 @@ function Index() {
               <LiveTracker />
             </div>
           </div>
-
         </div>
       </section>
 
@@ -342,13 +368,13 @@ function Index() {
               Um preço, sem letra miúda: {PRECO_MENSAL}/mês
             </h2>
             <p className="mt-5 text-lg text-muted-foreground">
-              Moto, carro ou veículo pesado, a mesma mensalidade e a mesma taxa de instalação.
-              Sem cobrança escondida. Escolha seu veículo abaixo.
+              Moto, carro ou veículo pesado, a mesma mensalidade e a mesma taxa de instalação. Sem
+              cobrança escondida. Escolha seu veículo abaixo.
             </p>
           </div>
 
           <div className="mt-12 mx-auto max-w-xl">
-            <PricingPlate />
+            <PricingPlate onWantsWhatsApp={irParaFormularioWhatsApp} />
           </div>
         </div>
       </section>
@@ -370,19 +396,20 @@ function Index() {
                 ["Data e horário na hora", "Você escolhe o melhor dia direto na nossa agenda."],
                 ["Técnico até você", "Instalação no seu endereço em Manaus ou na nossa base."],
                 ["Documentos simples", "CNH ou identidade, e-mail e comprovante de residência."],
-
               ].map(([t, d]) => (
                 <li key={t} className="flex gap-3.5">
                   <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
                   <span>
-                    <span className="block font-display text-sm uppercase tracking-wide text-white">{t}</span>
+                    <span className="block font-display text-sm uppercase tracking-wide text-white">
+                      {t}
+                    </span>
                     <span className="text-sm text-muted-foreground">{d}</span>
                   </span>
                 </li>
               ))}
             </ul>
           </div>
-          <LeadFilter />
+          <LeadFilter intent={whatsappIntent ? "whatsapp" : undefined} />
         </div>
       </section>
 
@@ -400,7 +427,9 @@ function Index() {
               <details key={f.q} className="group py-6">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6">
                   <h3 className="text-base normal-case tracking-normal md:text-lg">{f.q}</h3>
-                  <span className="mt-1 font-mono text-primary transition group-open:rotate-45">+</span>
+                  <span className="mt-1 font-mono text-primary transition group-open:rotate-45">
+                    +
+                  </span>
                 </summary>
                 <p className="mt-4 max-w-3xl text-muted-foreground">{f.a}</p>
               </details>
@@ -421,7 +450,7 @@ function Index() {
             precisão por uma taxa única de {TAXA_INSTALACAO}.
           </p>
           <div className="mt-9 flex justify-center">
-            <CtaWhats />
+            <CtaWhats onClick={() => irParaFormularioWhatsApp("cta-final")} />
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-steel">
             {WHATSAPP_DISPLAY} · Manaus / AM
@@ -442,28 +471,32 @@ function Index() {
               className="h-10 w-auto"
             />
             <p className="mt-5 max-w-xs text-sm text-steel">
-              Rastreio, bloqueio e resgate veicular 24h para carros, motos e caminhões em Manaus, AM.
+              Rastreio, bloqueio e resgate veicular 24h para carros, motos e caminhões em Manaus,
+              AM.
             </p>
           </div>
           <div className="text-sm text-steel">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-mist">Empresa</p>
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              Empresa
+            </p>
             <p>{EMPRESA.razaoSocial}</p>
             <p className="mt-1">CNPJ {EMPRESA.cnpj}</p>
             <address className="mt-3 not-italic">{EMPRESA.endereco}</address>
           </div>
           <div className="text-sm text-steel">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-mist">Contato</p>
-            <ExternalLink
-              href={WHATSAPP_DEFAULT}
-              event="whatsapp_click"
-              eventParams={{ location: "footer" }}
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-mist">
+              Contato
+            </p>
+            <button
+              type="button"
+              onClick={() => irParaFormularioWhatsApp("footer")}
               className="inline-flex items-center gap-2 text-ink transition hover:text-primary"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
                 <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Z" />
               </svg>
               {WHATSAPP_DISPLAY}
-            </ExternalLink>
+            </button>
             <br />
             <ExternalLink
               href={EMPRESA.instagram}
@@ -471,7 +504,13 @@ function Index() {
               eventParams={{ location: "footer" }}
               className="mt-3 inline-flex items-center gap-2 text-ink transition hover:text-primary"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <rect x="3" y="3" width="18" height="18" rx="5" />
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
@@ -489,17 +528,16 @@ function Index() {
       </footer>
 
       {/* WHATSAPP FLUTUANTE */}
-      <ExternalLink
-        href={WHATSAPP_DEFAULT}
-        event="whatsapp_click"
-        eventParams={{ location: "float" }}
+      <button
+        type="button"
+        onClick={() => irParaFormularioWhatsApp("float")}
         aria-label="Falar no WhatsApp"
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-navy-950 shadow-[var(--shadow-panel)] transition hover:scale-105"
       >
         <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor" aria-hidden="true">
           <path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm5.8 14.05c-.25.69-1.45 1.32-2 1.4-.53.08-1.19.11-1.92-.12a17.6 17.6 0 0 1-1.74-.64c-3.06-1.32-5.06-4.4-5.21-4.6-.15-.2-1.25-1.66-1.25-3.17s.8-2.25 1.08-2.56c.28-.31.61-.39.81-.39l.58.01c.19.01.44-.07.69.53.25.6.85 2.07.93 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5l-.44.52c-.15.15-.3.32-.13.62.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.4-.25.66-.15.27.1 1.7.8 1.99.95.29.15.48.22.55.35.07.13.07.74-.18 1.43Z" />
         </svg>
-      </ExternalLink>
+      </button>
     </div>
   );
 }
